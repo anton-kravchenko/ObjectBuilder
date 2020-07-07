@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "target": "es5",
+    "declaration": true,
+    "declarationDir": "./dist/",
+    "strict": true,
+    "module": "es6",
+    "allowJs": false,
+    "esModuleInterop": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
