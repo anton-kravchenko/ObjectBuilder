@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from 'poc'; // TODO: move to ObjectBuilder
+import { ObjectBuilder } from 'ObjectBuilder'; // TODO: move to ObjectBuilder
 import { PickNonOptionalFields } from 'types';
 import { number, string } from 'yargs';
 // TODO: think about symbols

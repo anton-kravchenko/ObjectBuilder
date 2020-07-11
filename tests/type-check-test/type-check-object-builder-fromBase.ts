@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from 'poc'; // TODO: move to ObjectBuilder
+import { ObjectBuilder } from 'ObjectBuilder'; // TODO: move to ObjectBuilder
 // TODO: make sure it type-checks during `build`
 // TODO: read about `as const`
 // TODO: fix ℹ No staged files match any configured task.
@@ -150,6 +150,20 @@ function case11() {
     .with('foo', 'str')
     .with('bar', 123)
     .with('baz', true)
+    .build();
+}
+/**
+ * `fromBase`
+ *
+ * Case 11: `.build` becomes available once all required fields are supplies (takes into account no optional fields from `base`)
+ */
+function case12() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get' };
+
+  ObjectBuilder.fromBase<TestType, typeof base>(base)
+    .with('response', '{}')
+    .with('status', 200)
     .build();
 }
 
