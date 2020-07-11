@@ -11,3 +11,4 @@ package-lock.json
 /tmp/
 .nyc_output/
 .vscode
+internal.ts

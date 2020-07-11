@@ -1,16 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from 'ObjectBuilder'; // TODO: move to ObjectBuilder
-import { PickNonOptionalFields } from 'types';
-import { number, string } from 'yargs';
-// TODO: think about symbols
-// TODO: check how it works with Arrays
-// TODO: add instructions for arrays
-// TODO: add instructions for `const` types
+import { ObjectBuilder } from 'ObjectBuilder';
+
 type TestType = { foo: string; bar: number; baz?: boolean };
 
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 1: `.with` is available only if some of the fields haven't been supplied (either optional or required)
  */
 function case1() {
@@ -22,8 +16,7 @@ function case1() {
     .with('baz', false);
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 2: `.with` doesn't allow to rewrite fields from preceding `with` calls
  */
 function case2() {
@@ -35,8 +28,7 @@ function case2() {
     .with('a', '');
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 3: `.with` doesn't allow as first argument anything except `keyof T`
  */
 function case3() {
@@ -48,8 +40,7 @@ function case3() {
   ObjectBuilder.new<TestType>().with('not_supported-key', 'the-value');
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 4: `.with` doesn't allow as second argument anything except `T[K]`
  */
 function case4() {
@@ -62,13 +53,11 @@ function case4() {
   ObjectBuilder.new<TestType>().with('method', 'PUT');
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 5: `.build` becomes available when all required fields have been supplied via `with`
  */
 function case5() {
   type TestType = { a: 'b'; c: 'd'; e?: 'f' };
-  // FIXME: check why is that - can we use extends object in `fromBase`?
 
   // @ts-expect-error -> should not offer `.with` method if `Target` type is not set
   ObjectBuilder.new().with;
@@ -79,8 +68,7 @@ function case5() {
   ObjectBuilder.new<TestType>().with('a', 'b').with('c', 'd').with('e', 'f').build();
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 6: `.build` doesn't allow any arguments
  */
 function case6() {
@@ -92,8 +80,7 @@ function case6() {
   ObjectBuilder.new<TestType>().with('a', 1337).build(123);
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 7: `.build` becomes available right away if target type is an empty object
  */
 function case7() {
@@ -107,25 +94,9 @@ function case7() {
 
   ObjectBuilder.new<TestType>().build();
   ObjectBuilder.new<EmptyType>().build();
-
-  type Diff<T, U> = T extends U ? never : T;
-  type t = {} extends unknown ? true : false;
-  type t1 = keyof {};
-  type t111 = keyof unknown;
-  type t2 = keyof unknown;
-  type t3 = {} extends {} ? true : false;
-  type t4 = unknown extends {} ? true : false;
-  type t5 = keyof PickNonOptionalFields<unknown> extends never ? true : false;
-  type t6 = keyof unknown extends never ? true : false;
-  type t7 = keyof { a: 1 } extends never ? true : false;
-  type t8 = Diff<{}, unknown>;
-  type t9 = Diff<unknown, unknown>;
-  type t10 = unknown extends {} ? true : false;
-  type t11 = {} extends {} ? true : false;
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 8: `.build` should allow to use all props from the target type after a call
  */
 function case8() {
@@ -143,8 +114,7 @@ function case8() {
     .build();
 }
 /**
- * `new`
- *
+ * `.new` `type-check` test
  * Case 9: `.new` should return `never` if `Target` is not supplied
  */
 function case9() {

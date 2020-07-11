@@ -23,5 +23,3 @@ export type {
   OmitBaseSuppliedAndOptionalKeys,
   OmitBaseAndOptionalKeys,
 };
-
-// TODO: write docs like for cypress with examples

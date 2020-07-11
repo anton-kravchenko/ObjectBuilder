@@ -109,5 +109,3 @@ describe('test ObjectBuilder', () => {
     });
   });
 });
-
-// FIXME: check why `const data = ObjectBuilder.fromBase<unknown, unknown>(undefined).build();` offers .with

@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from 'ObjectBuilder'; // TODO: move to ObjectBuilder
-// TODO: make sure it type-checks during `build`
-// TODO: read about `as const`
-// TODO: fix ℹ No staged files match any configured task.
+import { ObjectBuilder } from 'ObjectBuilder';
+
 type TestType = { foo: string; bar: number; baz?: boolean };
 
 /**
- * `fromBase`
+ * `fromBase`  `type-check` test
  *
  * Case 1: `.with` is available only if some of the fields haven't been supplied (either optional or required)
  */
@@ -19,7 +17,6 @@ function case1() {
     .with('foo', 'str')
     .with('bar', 123)
     .with('baz', true)
-    // .with('baz', undefined) // <- FIXME: check that
     .build();
 
   ObjectBuilder.fromBase<TestType, typeof base>(base)
@@ -30,7 +27,7 @@ function case1() {
     .with('should throw', true);
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 2: `.with` ignores fields from `base` therefore allows  to rewrite all fields from `base`
  */
@@ -44,7 +41,7 @@ function case2() {
     .build();
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 3: `.with` doesn't allow to rewrite fields from preceding `with` calls
  */
@@ -56,7 +53,7 @@ function case3() {
     .with('foo', 'another str');
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 5: `.with` doesn't allow as first argument anything except `keyof T`
  */
@@ -67,7 +64,7 @@ function case5() {
     .with('this-field-does-not-belong-here', 'str');
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 6: `.with` doesn't allow as second argument anything except `T[K]`
  */
@@ -85,7 +82,7 @@ function case6() {
     .build();
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 7: `.build` becomes available when all required fields have been supplied via `with`
  */
@@ -96,7 +93,7 @@ function case7() {
   ObjectBuilder.fromBase<TestType, typeof base>(base).with('foo', 'GET').build();
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 8: `.build` becomes available (right away) when all required fields have been supplied via `base` object
  */
@@ -107,7 +104,7 @@ function case8() {
   ObjectBuilder.fromBase<TestType, typeof base>(base).build();
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 9: `.build` becomes available (right away) when all required fields have been supplied via `base` object (assuming that target type has optional fields)
  */
@@ -118,7 +115,7 @@ function case9() {
   ObjectBuilder.fromBase<TestType, typeof base>(base).build();
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 10: `.build` doesn't allow any arguments
  */
@@ -132,7 +129,7 @@ function case10() {
     .build("I'm shouldn't be here");
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 11: `.build` should allow to use all props from the target type after a call
  */
@@ -153,7 +150,7 @@ function case11() {
     .build();
 }
 /**
- * `fromBase`
+ * `fromBase` `type-check` test
  *
  * Case 11: `.build` becomes available once all required fields are supplies (takes into account no optional fields from `base`)
  */
@@ -166,11 +163,3 @@ function case12() {
     .with('status', 200)
     .build();
 }
-
-// WORKS
-type Test = { a: number; b: string; c?: boolean };
-function prop<T, K extends keyof T>(obj: T, key: K): Pick<T, K> {
-  return { [key]: obj[key] } as any;
-}
-const f = prop({ a: 1, b: 'string' }, 'a');
-type f1 = typeof f;
