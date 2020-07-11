@@ -10,7 +10,7 @@ type StubbedEndpoint = {
 
 describe('test ObjectBuilder', () => {
   describe('test `fromBase` method', () => {
-    it('should properly build plane objects from an empty object', () => {
+    it('should properly build plane objects based on an empty object', () => {
       const data = ObjectBuilder.fromBase<StubbedEndpoint, {}>({})
         .with('name', 'order-history')
         .with('url', `/ihs-order-management/order/history`)
@@ -27,6 +27,7 @@ describe('test ObjectBuilder', () => {
         fixture: 'fixture:UnfulfilledOrder.json',
       });
     });
+
     it('should respect base object and properly extend it', () => {
       const base = {
         name: 'order-history',
@@ -46,22 +47,25 @@ describe('test ObjectBuilder', () => {
         fixture: 'fixture:UnfulfilledOrder.json',
       });
     });
-    it('should revoke proxy after `build` call', () => {
+    it('should "revoke" builder after `build` call', () => {
       const data = ObjectBuilder.fromBase<{ foo: string; bar: number }, {}>({})
         .with('foo', 'baz')
         .with('bar', 123)
         .build();
+
       // @ts-expect-error
       expect(() => data.build()).toThrowError('data.build is not a function');
+
       // @ts-expect-error
       expect(() => data.attemptToAddAnotherProp('bazinga')).toThrow(
         'data.attemptToAddAnotherProp is not a function',
       );
     });
 
-    it('should fallback `undefined` passed fo `of` with an empty object', () => {
-      // @ts-expect-error
+    it('should fallback `undefined` passed to `fromBase` with an empty object', () => {
+      // @ts-expect-error -> because `unknown` doesn't satisfy `extends object` constraint
       const data = ObjectBuilder.fromBase<unknown, unknown>(undefined).build();
+
       expect(data).toEqual({});
     });
 
@@ -75,7 +79,33 @@ describe('test ObjectBuilder', () => {
         .with('foo', '2020')
         .with('bar', 2020)
         .build();
+
       expect(data).toEqual({ foo: '2020', bar: 2020 });
+    });
+  });
+
+  describe('test `new` method', () => {
+    it('should properly build plain objects', () => {
+      const data = ObjectBuilder.new<StubbedEndpoint>()
+        .with('name', 'getStatusStub')
+        .with('method', 'GET')
+        .with('status', 200)
+        .with('fixture', 'fixture:getInfo.json')
+        .with('url', '/status')
+        .build();
+
+      expect(data).toEqual({
+        name: 'getStatusStub',
+        method: 'GET',
+        status: 200,
+        fixture: 'fixture:getInfo.json',
+        url: '/status',
+      });
+    });
+
+    it('should return an empty object if no `.with` calls have been made', () => {
+      const data = ObjectBuilder.new<Partial<StubbedEndpoint>>().build();
+      expect(data).toEqual({});
     });
   });
 });

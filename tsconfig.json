@@ -10,7 +10,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "esModuleInterop": true
   },
   "include": ["src", "tests/type-check-test"]
 }

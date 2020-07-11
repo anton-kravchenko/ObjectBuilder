@@ -41,12 +41,12 @@ class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Bas
 }
 
 class ObjectBuilder<T> {
-  public static fromBase<Target, Base extends Partial<Target>>(
+  public static fromBase<Target extends object, Base extends Partial<Target>>(
     base: Base,
   ): keyof OmitBaseAndOptionalKeys<Target, Base> extends never
     ? IBuild<Target> & IWith<Target, Base, {}>
     : IWith<Target, Base, {}> {
-    return new Build<Target, Base, {}>(base) as any;
+    return new Build<Target, Base, {}>(base ?? {}) as any;
   }
 
   public static new<Target>(): Target extends {}
