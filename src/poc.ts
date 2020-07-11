@@ -27,12 +27,13 @@ class Build<Target extends object, Base, Supplied>
     : keyof Omit<Omit<PickNonOptionalFields<Target>, keyof Supplied>, K> extends never
     ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
     : IWith<Target, Base, Supplied & Pick<T1, K>> {
-    (this.target as any)[key] = value;
-    return new Build<Target, Base, Supplied & Pick<T1, K>>(this.target as any) as any;
+    const target: Partial<Target> = { ...this.target, [key]: value };
+
+    return new Build<Target, Base, Supplied & Pick<T1, K>>(target) as any;
   }
 
-  build(): keyof Omit<Omit<Target, keyof Base>, keyof Supplied> extends never ? Target : never {
-    return (this.target as Required<Target>) as any;
+  build(): Target {
+    return this.target as Required<Target>;
   }
 }
 
@@ -43,6 +44,11 @@ class ObjectBuilder<T> {
     ? IBuild<Target> & IWith<Target, Base, {}>
     : IWith<Target, Base, {}> {
     return new Build<Target, Base, {}>(base) as any;
+  }
+  public static new<Target extends object>(): keyof PickNonOptionalFields<Target> extends never
+    ? IBuild<Target> & IWith<Target, {}, {}>
+    : IWith<Target, {}, {}> {
+    return new Build<Target, {}, {}>({}) as any;
   }
 }
 
@@ -64,3 +70,6 @@ const aaaaaa = ObjectBuilder.fromBase<Test, {}>({})
   .with('b', '1')
   .with('c', false)
   .build();
+
+const f6: Partial<Test> = {};
+f6.a = 1;

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from './poc'; // TODO: move to ObjectBuilder
+import { ObjectBuilder } from 'poc'; // TODO: move to ObjectBuilder
 // TODO: make sure it type-checks during `build`
 // TODO: read about `as const`
 // TODO: fix ℹ No staged files match any configured task.
@@ -73,16 +73,16 @@ function case5() {
  */
 function case6() {
   type TestType = { foo: 'GET' | 'POST'; bar: 1 | 2; baz?: true };
-  // const base = { foo: 'GET' as const, bar: 1 as const, baz: true as const };
-  // TODO: use ^ when issue with `base` (should allow to rewrite base) will be fixed
-  const base = {};
+  const base = { foo: 'GET' as const, bar: 1 as const, baz: true as const };
+
   ObjectBuilder.fromBase<TestType, typeof base>(base)
     // @ts-expect-error
     .with('foo', 'PATCH')
     // @ts-expect-error
     .with('bar', 3)
     // @ts-expect-error
-    .with('baz', false);
+    .with('baz', false)
+    .build();
 }
 /**
  * `fromBase`
@@ -130,6 +130,27 @@ function case10() {
     .with('foo', 1)
     // @ts-expect-error
     .build("I'm shouldn't be here");
+}
+/**
+ * `fromBase`
+ *
+ * Case 11: `.build` should allow to use all props from the target type after a call
+ */
+function case11() {
+  const base = {};
+
+  const { foo, bar, baz } = ObjectBuilder.fromBase<TestType, typeof base>(base)
+    .with('foo', 'str')
+    .with('bar', 123)
+    .with('baz', true)
+    .build();
+
+  // @ts-expect-error
+  const { howDidIGetHere } = ObjectBuilder.fromBase<TestType, typeof base>(base)
+    .with('foo', 'str')
+    .with('bar', 123)
+    .with('baz', true)
+    .build();
 }
 
 // WORKS

@@ -9,10 +9,11 @@
     "build": "webpack",
     "lint": "eslint '**/*.ts'",
     "test": "jest",
+    "type-check": "tsc --project tsconfig.json",
     "test:watch": "jest --watch",
     "pretest:coverage": "npm run clear",
     "test:coverage": "jest --coverage",
-    "ci": "npm-run-all lint test build",
+    "ci": "npm-run-all type-check lint test build",
     "clean": "rimraf coverage dist"
   },
   "husky": {
