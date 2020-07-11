@@ -105,7 +105,7 @@ function case7() {
   // @ts-expect-error -> since `TestType` is empty, the builder should not offer `.with` method
   ObjectBuilder.new<EmptyType>().with;
 
-  ObjectBuilder.new<TestType>().build(); // TODO: <- add test for that case
+  ObjectBuilder.new<TestType>().build();
   ObjectBuilder.new<EmptyType>().build();
 
   type Diff<T, U> = T extends U ? never : T;

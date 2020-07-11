@@ -1,4 +1,4 @@
-import { ObjectBuilder } from '../src/ObjectBuilder';
+import { ObjectBuilder } from '../ObjectBuilder';
 
 type StubbedEndpoint = {
   name: string;

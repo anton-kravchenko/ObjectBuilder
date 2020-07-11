@@ -2,7 +2,7 @@
   "name": "object-builder",
   "version": "0.0.1",
   "description": "TypeSafe object generation with smart type inference.",
-  "main": "./dist/bundle.js",
+  "main": "./dist/ObjectBuilder.js",
   "scripts": {
     "prepublish": "npm run ci",
     "prebuild": "npm run clean",

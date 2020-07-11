@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
   },
   resolve: { extensions: ['.ts'] },
   output: {
-    filename: 'bundle.js',
+    filename: 'ObjectBuilder.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };

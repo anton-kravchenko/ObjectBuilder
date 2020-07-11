@@ -13,5 +13,5 @@
     "baseUrl": "src",
     "esModuleInterop": true
   },
-  "include": ["src", "tests/type-check-test"]
+  "include": ["src", "src/tests/type-check-test"]
 }
