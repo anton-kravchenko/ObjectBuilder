@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from './testing'; // TODO: move to ObjectBuilder
+import { ObjectBuilder } from './poc'; // TODO: move to ObjectBuilder
 // TODO: make sure it type-checks during `build`
 // TODO: read about `as const`
-
-type TestType = {
-  foo: string;
-  bar: number;
-  baz?: boolean;
-};
+// TODO: fix ℹ No staged files match any configured task.
+type TestType = { foo: string; bar: number; baz?: boolean };
 
 /**
  * `fromBase`
@@ -15,12 +11,15 @@ type TestType = {
  * Case 1: `.with` is available only if some of the fields haven't been supplied (either optional or required)
  */
 function case1() {
+  type TestType = { foo: string; bar: number; baz?: boolean };
+
   const base = {};
 
   ObjectBuilder.fromBase<TestType, typeof base>(base)
     .with('foo', 'str')
     .with('bar', 123)
     .with('baz', true)
+    // .with('baz', undefined) // <- FIXME: check that
     .build();
 
   ObjectBuilder.fromBase<TestType, typeof base>(base)
@@ -121,3 +120,11 @@ function case9() {
     // @ts-expect-error
     .build("I'm shouldn't be here");
 }
+
+// WORKS
+type Test = { a: number; b: string; c?: boolean };
+function prop<T, K extends keyof T>(obj: T, key: K): Pick<T, K> {
+  return { [key]: obj[key] } as any;
+}
+const f = prop({ a: 1, b: 'string' }, 'a');
+type f1 = typeof f;

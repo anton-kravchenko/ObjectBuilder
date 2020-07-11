@@ -44,31 +44,10 @@ class ObjectBuilder<T> {
     return new Build<Omit<T, keyof F>, T>(base) as any;
   }
 }
-
-type StubbedEndpoint = {
-  name: string;
-  method: 'GET' | 'POST' | 'PUT';
-  url?: string;
-  status?: number;
-};
-
-const base1 = { name: '123', method: 'GET' as const };
-// @ts-expect-error
-ObjectBuilder.fromBase<StubbedEndpoint, typeof base1>(base1).with('name', '13'); // <- because `base` has `name`
-const b1 = ObjectBuilder.fromBase<StubbedEndpoint, typeof base1>(base1).build();
-
-const base2 = { url: '123', status: 123 };
-// @ts-expect-error
-ObjectBuilder.fromBase<StubbedEndpoint, typeof base2>(base2).build(); // <- because no required fields had been supplied
-// @ts-expect-error
-ObjectBuilder.fromBase<StubbedEndpoint, typeof base2>(base2).with('url', 'url'); // <- because `base` has `name`
-const b2 = ObjectBuilder.fromBase<StubbedEndpoint, typeof base2>(base2)
-  .with('method', 'GET')
-  .with('name', 'name')
-  .build();
-
 /*
-  Builder.from({ a: b })
-  Builder.new()
+  BaseType
+  SuppliedType
+  OmittedType
+
 */
 export { ObjectBuilder };
