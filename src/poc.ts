@@ -13,7 +13,6 @@ interface IWith<Target, Base, Supplied> {
   with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
     key: K,
     value: T1[K],
-    // ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
   ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
     ? IBuild<Target>
     : IWith<Target, Base, Supplied & Pick<T1, K>>;
@@ -63,9 +62,11 @@ class ObjectBuilder<T> {
   //   return new Build<Omit<T, keyof F>, T>(base) as any;
   // }
 
-  public static fromBase<Target, Base extends Partial<Target>>(
+  public static fromBase<Target extends object, Base extends Partial<Target>>(
     base: Base,
-  ): keyof Omit<Target, keyof Base> extends never ? IBuild<Target> : IWith<Target, Base, {}> {
+  ): keyof Omit<PickNonOptionalFields<Target>, keyof Base> extends never
+    ? IBuild<Target> & IWith<Target, Base, {}>
+    : IWith<Target, Base, {}> {
     return new Build<Target, Base, {}>(base) as any;
   }
 }

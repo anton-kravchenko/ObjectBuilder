@@ -98,7 +98,7 @@ function case7() {
 /**
  * `fromBase`
  *
- * Case 8: `.build` offers (right away) when all required fields have been supplied via `base` object
+ * Case 8: `.build` becomes available (right away) when all required fields have been supplied via `base` object
  */
 function case8() {
   type TestType = { foo: 'GET' | 'POST'; bar?: 1 | 2; baz?: true };
@@ -109,9 +109,20 @@ function case8() {
 /**
  * `fromBase`
  *
- * Case 9: `.build` doesn't allow any arguments
+ * Case 9: `.build` becomes available (right away) when all required fields have been supplied via `base` object (assuming that target type has optional fields)
  */
 function case9() {
+  type TestType = { foo: 'GET' | 'POST'; bar?: 1 | 2; baz?: true };
+  const base = { foo: 'GET' as const };
+
+  ObjectBuilder.fromBase<TestType, typeof base>(base).build();
+}
+/**
+ * `fromBase`
+ *
+ * Case 10: `.build` doesn't allow any arguments
+ */
+function case10() {
   type TestType = { foo: number };
   const base = {};
 
