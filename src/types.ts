@@ -9,5 +9,5 @@ type PickNonOptionalKeys<T extends object> = Exclude<
 /* Filers out all optional fields from an "object" type alias */
 type PickNonOptionalFields<T extends object> = Pick<T, PickNonOptionalKeys<T>>;
 
-export { PickNonOptionalKeys, PickNonOptionalFields, Diff };
+export { PickNonOptionalKeys, PickNonOptionalFields };
 // TODO: write docs like for cypress with examples
