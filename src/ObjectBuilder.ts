@@ -48,6 +48,7 @@ class ObjectBuilder<T> {
     : IWith<Target, Base, {}> {
     return new Build<Target, Base, {}>(base) as any;
   }
+
   public static new<Target>(): Target extends {}
     ? keyof PickNonOptionalFields<Target> extends never
       ? IBuild<Target>
