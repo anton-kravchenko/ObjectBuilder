@@ -1,4 +1,8 @@
-import { PickNonOptionalFields } from './types';
+import type {
+  OmitBaseSuppliedAndOptionalKeys,
+  OmitBaseAndOptionalKeys,
+  PickNonOptionalFields,
+} from './types';
 
 interface IBuild<Target> {
   build(): Target;
@@ -10,10 +14,7 @@ interface IWith<Target, Base, Supplied> {
     value: T1[K],
   ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
     ? IBuild<Target>
-    : keyof Omit<
-        Omit<Omit<PickNonOptionalFields<Target>, keyof Supplied>, keyof Base>,
-        K
-      > extends never
+    : keyof Omit<OmitBaseSuppliedAndOptionalKeys<Target, Base, Supplied>, K> extends never
     ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
     : IWith<Target, Base, Supplied & Pick<T1, K>>;
 }
@@ -26,10 +27,7 @@ class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Bas
     value: T1[K],
   ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
     ? IBuild<Target>
-    : keyof Omit<
-        Omit<Omit<PickNonOptionalFields<Target>, keyof Supplied>, keyof Base>,
-        K
-      > extends never
+    : keyof Omit<OmitBaseSuppliedAndOptionalKeys<Target, Base, Supplied>, K> extends never
     ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
     : IWith<Target, Base, Supplied & Pick<T1, K>> {
     const target: Partial<Target> = { ...this.target, [key]: value };
@@ -45,7 +43,7 @@ class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Bas
 class ObjectBuilder<T> {
   public static fromBase<Target, Base extends Partial<Target>>(
     base: Base,
-  ): keyof Omit<PickNonOptionalFields<Target>, keyof Base> extends never
+  ): keyof OmitBaseAndOptionalKeys<Target, Base> extends never
     ? IBuild<Target> & IWith<Target, Base, {}>
     : IWith<Target, Base, {}> {
     return new Build<Target, Base, {}>(base) as any;
