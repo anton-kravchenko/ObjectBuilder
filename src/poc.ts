@@ -4,7 +4,7 @@ interface IBuild<Target> {
   build(): Target;
 }
 
-interface IWith<Target extends object, Base, Supplied> {
+interface IWith<Target, Base, Supplied> {
   with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
     key: K,
     value: T1[K],
@@ -15,8 +15,7 @@ interface IWith<Target extends object, Base, Supplied> {
     : IWith<Target, Base, Supplied & Pick<T1, K>>;
 }
 
-class Build<Target extends object, Base, Supplied>
-  implements IBuild<Target>, IWith<Target, Base, Supplied> {
+class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Base, Supplied> {
   constructor(private target: Partial<Target>) {}
 
   with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
@@ -38,18 +37,27 @@ class Build<Target extends object, Base, Supplied>
 }
 
 class ObjectBuilder<T> {
-  public static fromBase<Target extends object, Base extends Partial<Target>>(
+  public static fromBase<Target, Base extends Partial<Target>>(
     base: Base,
   ): keyof Omit<PickNonOptionalFields<Target>, keyof Base> extends never
     ? IBuild<Target> & IWith<Target, Base, {}>
     : IWith<Target, Base, {}> {
     return new Build<Target, Base, {}>(base) as any;
   }
-  public static new<Target extends object>(): keyof PickNonOptionalFields<Target> extends never
-    ? IBuild<Target> & IWith<Target, {}, {}>
-    : IWith<Target, {}, {}> {
+  public static new<Target>(): Target extends {}
+    ? keyof PickNonOptionalFields<Target> extends never
+      ? IBuild<Target>
+      : IWith<Target, {}, {}>
+    : never {
     return new Build<Target, {}, {}>({}) as any;
   }
+  // public static new<Target>(): Target extends unknown
+  //   ? never
+  //   : keyof PickNonOptionalFields<Target> extends never
+  //   ? IBuild<Target> & IWith<Target, {}, {}>
+  //   : IWith<Target, {}, {}> {
+  //   return new Build<Target, {}, {}>({}) as any;
+  // }
 }
 
 export { ObjectBuilder };

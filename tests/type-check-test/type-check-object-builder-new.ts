@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ObjectBuilder } from 'poc'; // TODO: move to ObjectBuilder
+import { PickNonOptionalFields } from 'types';
+import { number, string } from 'yargs';
 // TODO: think about symbols
 // TODO: check how it works with Arrays
 // TODO: add instructions for arrays
@@ -92,20 +94,63 @@ function case6() {
 /**
  * `new`
  *
- * Case 7: `.build` becomes available right away if target type is
+ * Case 7: `.build` becomes available right away if target type is an empty object
  */
 function case7() {
-  type TestType = {};
+  type TestType = { a?: 1; b?: 2; c?: 3 };
+  type EmptyType = {};
 
   // @ts-expect-error -> since `TestType` is empty, the builder should not offer `.with` method
   ObjectBuilder.new<TestType>().with;
+  // @ts-expect-error -> since `TestType` is empty, the builder should not offer `.with` method
+  ObjectBuilder.new<EmptyType>().with;
 
-  // FIXME: should be never instead
-  const t = ObjectBuilder.new().build();
+  ObjectBuilder.new<TestType>().build(); // TODO: <- add test for that case
+  ObjectBuilder.new<EmptyType>().build();
+
+  type Diff<T, U> = T extends U ? never : T;
+  type t = {} extends unknown ? true : false;
+  type t1 = keyof {};
+  type t111 = keyof unknown;
+  type t2 = keyof unknown;
+  type t3 = {} extends {} ? true : false;
+  type t4 = unknown extends {} ? true : false;
+  type t5 = keyof PickNonOptionalFields<unknown> extends never ? true : false;
+  type t6 = keyof unknown extends never ? true : false;
+  type t7 = keyof { a: 1 } extends never ? true : false;
+  type t8 = Diff<{}, unknown>;
+  type t9 = Diff<unknown, unknown>;
+  type t10 = unknown extends {} ? true : false;
+  type t11 = {} extends {} ? true : false;
 }
 /**
  * `new`
  *
  * Case 8: `.build` should allow to use all props from the target type after a call
  */
-function case8() {}
+function case8() {
+  type TestType<T> = { method: 'GET' | 'POST'; url: string; response: T };
+  type Response = { status: number; payload: Record<string, string | number> };
+
+  const {
+    url,
+    method,
+    response: { status, payload },
+  } = ObjectBuilder.new<TestType<Response>>()
+    .with('method', 'GET')
+    .with('url', 'url')
+    .with('response', { status: 200, payload: { foo: 123, baz: 'bazinga' } })
+    .build();
+}
+/**
+ * `new`
+ *
+ * Case 9: `.new` should return `never` if `Target` is not supplied
+ */
+function case9() {
+  // @ts-expect-error -> build should not be available if `Target` is not supplied
+  ObjectBuilder.new().build;
+
+  // @ts-expect-error -> with should not be available if `Target` is not supplied
+  ObjectBuilder.new().with;
+}
