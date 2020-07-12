@@ -9,7 +9,7 @@ module.exports = {
   },
   resolve: { extensions: ['.ts'] },
   output: {
-    filename: 'ObjectBuilder.js',
+    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };
