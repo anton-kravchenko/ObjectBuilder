@@ -14,7 +14,7 @@
     "test:watch": "jest --watch",
     "pretest:coverage": "npm run clean",
     "test:coverage": "jest --coverage",
-    "ci": "npm-run-all type-check lint test build",
+    "ci": "npm-run-all type-check lint test",
     "clean": "rimraf coverage dist"
   },
   "husky": {
