@@ -1,6 +1,6 @@
 {
   "name": "object-builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TypeSafe object generation with smart type inference.",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -57,5 +57,9 @@
     "typescript": "^3.9.6",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
-  }
+  },
+  "keywords": [
+    "TypeScript",
+    "ObjectBuilder"
+  ]
 }
