@@ -1,6 +1,6 @@
 {
   "name": "object-builder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TypeSafe object generation with smart type inference.",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
