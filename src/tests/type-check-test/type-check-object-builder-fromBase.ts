@@ -152,7 +152,7 @@ function case11() {
 /**
  * `fromBase` `type-check` test
  *
- * Case 11: `.build` becomes available once all required fields are supplies (takes into account no optional fields from `base`)
+ * Case 12: `.build` becomes available once all required fields are supplies (takes into account no optional fields from `base`)
  */
 function case12() {
   type TestType = { method: string; status: number; response: string };
@@ -162,4 +162,16 @@ function case12() {
     .with('response', '{}')
     .with('status', 200)
     .build();
+}
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 13: `.build` becomes available ONLY when all required fields are supplied (takes into account no optional fields from `base`)
+ */
+function case13() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get' };
+
+  // @ts-expect-error
+  ObjectBuilder.fromBase<TestType>(base).with('response', '{}').build();
 }
