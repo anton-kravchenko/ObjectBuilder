@@ -1,0 +1,14 @@
+node_modules
+coverage
+dist
+*.iml
+.DS_Store
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+/tmp/
+.nyc_output/
+.vscode
+internal.ts
