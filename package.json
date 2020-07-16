@@ -1,11 +1,11 @@
 {
   "name": "typescript-object-builder",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "TypeSafe object generation with smart type inference.",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "prepare": "npm run ci",
+    "prepare": "npm-run-all ci build",
     "prebuild": "npm run clean",
     "build": "webpack",
     "lint": "eslint '**/*.ts'",
