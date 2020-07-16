@@ -61,3 +61,5 @@ class ObjectBuilder<T> {
 }
 
 export { ObjectBuilder };
+export type { PickNonOptionalFields, OmitBaseSuppliedAndOptionalKeys, OmitBaseAndOptionalKeys };
+export type { PickNonOptionalFieldsKeys, Keys } from './types';

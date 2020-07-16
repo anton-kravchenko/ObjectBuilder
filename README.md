@@ -1,8 +1,5 @@
 TODO:
 
-- [ ] optimize deps
-- [ ] generate d.ts files
-- [ ] think about symbols
 - [ ] check how it works with Arrays
 - [ ] add instructions for arrays
 - [ ] add instructions for `const` types
@@ -11,3 +8,4 @@ TODO:
 - [ ] figure out lowest TS version (at least 2.8 because of `extends t`?)
 - [ ] pass all in `dist` folder through prettier
 - [ ] read about builder pattern (especially in java since there is no way to build an object in-place) (example src/test/java/com/dish/wfm/order/management/integration/EmailNotificationHelperTest.java)
+- [ ] test that types from `types.ts` importable from `root`
