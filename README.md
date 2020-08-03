@@ -36,7 +36,7 @@ const base = { url: '/status', description: 'Health check' };
 
 const endpoint = ObjectBuilder.fromBase<Endpoint, typeof base>(base)
   .with('method', 'GET')
-  .build(); /* OK - all required fields are set (via base object and `with`) */
+  .build(); /* OK - all of the required fields are set (via base object and `with`) */
 
 const invalidEndpoint = ObjectBuilder.fromBase<Endpoint, typeof base>(base)
   .with('description', 'desc')
@@ -50,7 +50,7 @@ const invalidEndpoint = ObjectBuilder.fromBase<Endpoint, typeof base>(base)
 <!-- FIXME: fix export and import -->
 
 ```typescript
-import { PickNonOptionalFields } from 'typescript-object-builder/src/types';
+import { PickNonOptionalFields } from 'typescript-object-builder';
 
 type Endpoint = { url: string; method: string; description?: string };
 
@@ -61,7 +61,7 @@ type T = PickNonOptionalFields<Endpoint>;
 `ObjectBuilder.PickNonOptionalFieldsKeys`
 
 ```typescript
-import { PickNonOptionalFieldsKeys } from 'typescript-object-builder/src/types';
+import { PickNonOptionalFieldsKeys } from 'typescript-object-builder';
 
 type Endpoint = { url: string; method: string; description?: string };
 
