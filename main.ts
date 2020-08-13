@@ -1,3 +1,3 @@
 export { ObjectBuilder } from './src/ObjectBuilder';
-export { PickNonOptionalFields } from './src/types';
-export { PickNonOptionalFieldsKeys } from './src/types';
+export type { PickNonOptionalFields } from './src/types';
+export type { PickNonOptionalFieldsKeys } from './src/types';
