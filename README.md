@@ -45,27 +45,24 @@ const invalidEndpoint = ObjectBuilder.fromBase<Endpoint, typeof base>(base)
 
 ## Utility types
 
-`ObjectBuilder.PickNonOptionalFields`
-
-<!-- FIXME: fix export and import -->
-
-```typescript
-import { PickNonOptionalFields } from 'typescript-object-builder';
-
-type Endpoint = { url: string; method: string; description?: string };
-
-type T = PickNonOptionalFields<Endpoint>;
-/* T is { url: string; method: string; } */
-```
-
 `ObjectBuilder.PickNonOptionalFieldsKeys`
 
 ```typescript
-import { PickNonOptionalFieldsKeys } from 'typescript-object-builder';
+import type { PickNonOptionalFieldsKeys } from 'typescript-object-builder';
 
 type Endpoint = { url: string; method: string; description?: string };
 
 type T = PickNonOptionalFieldsKeys<Endpoint>; /* T is "url" | "method" */
+```
+
+`ObjectBuilder.PickNonOptionalFields`
+
+```typescript
+import type { PickNonOptionalFields } from 'typescript-object-builder';
+
+type Endpoint = { url: string; method: string; description?: string };
+
+type T = PickNonOptionalFields<Endpoint>; /* T is { url: string; method: string; } */
 ```
 
 ## Features
