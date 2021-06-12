@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ObjectBuilder } from 'ObjectBuilder';
+import { ObjectBuilder } from '../../ObjectBuilder';
 
 type TestType = { foo: string; bar: number; baz?: boolean };
 
