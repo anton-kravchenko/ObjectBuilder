@@ -14,7 +14,7 @@ interface IWith<Target, Base, Supplied> {
   with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
     key: K /* eslint-disable-line @typescript-eslint/no-unused-vars */,
     value: T1[K] /* eslint-disable-line @typescript-eslint/no-unused-vars */,
-  ): keyof Omit<Target, keyof Supplied & K> extends never
+  ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
     ? IBuild<Target>
     : keyof Omit<OmitBaseSuppliedAndOptionalKeys<Target, Base, Supplied>, K> extends never
     ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
@@ -27,7 +27,7 @@ class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Bas
   with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
     key: K,
     value: T1[K],
-  ): keyof Omit<Target, keyof Supplied & K> extends never
+  ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
     ? IBuild<Target>
     : keyof Omit<OmitBaseSuppliedAndOptionalKeys<Target, Base, Supplied>, K> extends never
     ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
