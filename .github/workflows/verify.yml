@@ -1,37 +1,23 @@
-name: CI
+name: Verify
 
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
-  verify:
+  verify-and-build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
       - name: Run ci checks
-        run: |
-          npm ci
-          npm run ci
-
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-      - name: Build
         run: |
           npm ci
           npm run build

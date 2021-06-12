@@ -1,6 +1,6 @@
 {
   "name": "typescript-object-builder",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "TypeSafe object generation with smart type inference.",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
