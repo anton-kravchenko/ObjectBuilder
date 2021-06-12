@@ -34,7 +34,7 @@ class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Bas
     : IWith<Target, Base, Supplied & Pick<T1, K>> {
     const target: Partial<Target> = { ...this.target, [key]: value };
 
-    return new Build<Target, Base, Supplied & Pick<T1, K>>(target);
+    return new Build<Target, Base, Supplied & Pick<T1, K>>(target) as any;
   }
 
   build(): Target {
