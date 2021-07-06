@@ -175,3 +175,68 @@ function case13() {
   // @ts-expect-error
   ObjectBuilder.fromBase<TestType>(base).with('response', '{}').build();
 }
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 14: `basedOn` accepts only one type argument and lets to rewrite all props one time
+ */
+function case14() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get', status: 123, response: 'string' };
+  ObjectBuilder.basedOn<TestType>(base)
+    .with('method', 'a')
+    .with('response', '123')
+    .with('status', 123)
+    .build();
+}
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 15: `basedOn` allows to build object right away
+ */
+function case15() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get', status: 123, response: 'string' };
+  ObjectBuilder.basedOn<TestType>(base).build();
+}
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 16: `basedOn` does not allow `base` to have type different than T1
+ */
+function case16() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get', status: 123 };
+
+  // @ts-expect-error
+  ObjectBuilder.basedOn<TestType>(base);
+}
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 17: `basedOn` does not allow supplying properties that do not exist in T1
+ */
+function case17() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get', status: 123, response: 'string' };
+
+  // @ts-expect-error
+  ObjectBuilder.basedOn<TestType>(base).with('foo', 'bar').build();
+}
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 18: `basedOn` does not allow supplying values of the wrong type
+ */
+function case18() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get', status: 123, response: 'string' };
+
+  // @ts-expect-error
+  ObjectBuilder.basedOn<TestType>(base).with('method', 123).build();
+}

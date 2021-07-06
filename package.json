@@ -12,9 +12,9 @@
     "prebuild": "npm run clean",
     "lint": "eslint '**/*.ts'",
     "type-check": "tsc --project tsconfig.json",
-    "test:watch": "jest --watch",
+    "test:watch": "tsdx test --watch",
     "pretest:coverage": "npm run clean",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "tsdx test --coverage",
     "ci": "npm-run-all type-check lint test",
     "clean": "rimraf coverage dist"
   },
