@@ -177,7 +177,7 @@ function case13() {
 }
 
 /**
- * `fromBase` `type-check` test
+ * `basedOn` `type-check` test
  *
  * Case 14: `basedOn` accepts only one type argument and lets to rewrite all props one time
  */
@@ -192,7 +192,7 @@ function case14() {
 }
 
 /**
- * `fromBase` `type-check` test
+ * `basedOn` `type-check` test
  *
  * Case 15: `basedOn` allows to build object right away
  */
@@ -203,7 +203,7 @@ function case15() {
 }
 
 /**
- * `fromBase` `type-check` test
+ * `basedOn` `type-check` test
  *
  * Case 16: `basedOn` does not allow `base` to have type different than T1
  */
@@ -216,7 +216,7 @@ function case16() {
 }
 
 /**
- * `fromBase` `type-check` test
+ * `basedOn` `type-check` test
  *
  * Case 17: `basedOn` does not allow supplying properties that do not exist in T1
  */
@@ -229,7 +229,7 @@ function case17() {
 }
 
 /**
- * `fromBase` `type-check` test
+ * `basedOn` `type-check` test
  *
  * Case 18: `basedOn` does not allow supplying values of the wrong type
  */
