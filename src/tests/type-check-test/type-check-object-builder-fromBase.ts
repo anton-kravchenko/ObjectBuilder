@@ -183,7 +183,7 @@ function case13() {
  */
 function case14() {
   type TestType = { method: string; status: number; response: string };
-  const base = { method: 'get', status: 123, response: 'string' };
+  const base: TestType = { method: 'get', status: 123, response: 'string' };
   ObjectBuilder.basedOn<TestType>(base)
     .with('method', 'a')
     .with('response', '123')
@@ -198,7 +198,7 @@ function case14() {
  */
 function case15() {
   type TestType = { method: string; status: number; response: string };
-  const base = { method: 'get', status: 123, response: 'string' };
+  const base: TestType = { method: 'get', status: 123, response: 'string' };
   ObjectBuilder.basedOn<TestType>(base).build();
 }
 
@@ -222,7 +222,7 @@ function case16() {
  */
 function case17() {
   type TestType = { method: string; status: number; response: string };
-  const base = { method: 'get', status: 123, response: 'string' };
+  const base: TestType = { method: 'get', status: 123, response: 'string' };
 
   // @ts-expect-error
   ObjectBuilder.basedOn<TestType>(base).with('foo', 'bar').build();
@@ -235,7 +235,7 @@ function case17() {
  */
 function case18() {
   type TestType = { method: string; status: number; response: string };
-  const base = { method: 'get', status: 123, response: 'string' };
+  const base: TestType = { method: 'get', status: 123, response: 'string' };
 
   // @ts-expect-error
   ObjectBuilder.basedOn<TestType>(base).with('method', 123).build();
