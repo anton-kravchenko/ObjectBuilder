@@ -118,6 +118,7 @@ describe('test ObjectBuilder', () => {
       expect(base).toEqual(result1);
       expect(base).toEqual(result2);
     });
+
     it('should rewrite supplied fields', () => {
       const base = { foo: 'bar', baz: 123 };
       const result1 = ObjectBuilder.basedOn(base).with('foo', 'changed-foo').build();
