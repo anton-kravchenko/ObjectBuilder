@@ -1,56 +1,42 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+class ObjectBuilder {
+  public static new<Target>(): IWith<Target, {}> {
+    return new Build<Target, {}>({});
+  }
+}
 
-import type {
-  OmitBaseSuppliedAndOptionalKeys,
-  OmitBaseAndOptionalKeys,
-  PickNonOptionalFields,
-} from './types';
+interface IWith<Target, Supplied> {
+  with<T extends Omit<Target, keyof Supplied>, K extends keyof T>(
+    key: K,
+    value: T[K],
+  ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
+    ? IBuild<Target>
+    : IWith<Target, Supplied & Pick<T, K>>;
+}
 
 interface IBuild<Target> {
   build(): Target;
 }
 
-interface IWith<Target, Base, Supplied> {
-  with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
-    key: K,
-    value: T1[K],
-  ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
-    ? IBuild<Target>
-    : keyof Omit<OmitBaseSuppliedAndOptionalKeys<Target, Base, Supplied>, K> extends never
-    ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
-    : IWith<Target, Base, Supplied & Pick<T1, K>>;
-}
-
-class Build<Target, Base, Supplied> implements IBuild<Target>, IWith<Target, Base, Supplied> {
+class Build<Target, Supplied> implements IBuild<Target>, IWith<Target, Supplied> {
   constructor(private target: Partial<Target>) {}
 
-  with<T1 extends Omit<Target, keyof Supplied>, K extends keyof T1>(
-    key: K,
-    value: T1[K],
-  ): keyof Omit<Omit<Target, keyof Supplied>, K> extends never
-    ? IBuild<Target>
-    : keyof Omit<OmitBaseSuppliedAndOptionalKeys<Target, Base, Supplied>, K> extends never
-    ? IBuild<Target> & IWith<Target, Base, Supplied & Pick<T1, K>>
-    : IWith<Target, Base, Supplied & Pick<T1, K>> {
+  with<T extends Omit<Target, keyof Supplied>, K extends keyof T>(key: K, value: T[K]) {
     const target: Partial<Target> = { ...this.target, [key]: value };
 
-    return new Build<Target, Base, Supplied & Pick<T1, K>>(target) as any;
+    return new Build<Target, Supplied & Pick<T, K>>(target);
   }
 
-  build(): Target {
-    return this.target as Required<Target>;
+  build() {
+    return this.target as Target;
   }
 }
 
-class ObjectBuilder<T> {
-  public static fromBase<Target extends object, Base extends Partial<Target>>(
-    base: Base,
-  ): keyof OmitBaseAndOptionalKeys<Target, Base> extends never
-    ? IBuild<Target> & IWith<Target, Base, {}>
-    : IWith<Target, Base, {}> {
-    return new Build<Target, Base, {}>(base ?? {}) as any;
-  }
+const response: ResponseEntity = ObjectBuilder.new<ResponseEntity>()
+  .with('payload', 'OK')
+  .with('status', 200)
+  .build();
 
+<<<<<<< Updated upstream
   public static new<Target>(): Target extends {}
     ? keyof PickNonOptionalFields<Target> extends never
       ? IBuild<Target>
@@ -59,6 +45,12 @@ class ObjectBuilder<T> {
     return new Build<Target, {}, {}>({}) as any;
   }
 }
+=======
+type ResponseEntity = { status: number; payload: string };
+>>>>>>> Stashed changes
 
 export { ObjectBuilder };
 export type { PickNonOptionalFields, PickNonOptionalFieldsKeys, Keys } from './types';
+// FIXME: return type in class can be omitted
+
+type T = keyof {} extends never ? true : false;

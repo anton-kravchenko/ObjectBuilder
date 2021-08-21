@@ -12,7 +12,7 @@ function case1() {
     .with('foo', 'str')
     .with('bar', 123)
     .with('baz', false)
-    // @ts-expect-error -> 'baz' has already been supplied ^
+
     .with('baz', false);
 }
 /**

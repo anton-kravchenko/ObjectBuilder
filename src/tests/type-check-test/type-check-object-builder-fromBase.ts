@@ -171,7 +171,5 @@ function case12() {
 function case13() {
   type TestType = { method: string; status: number; response: string };
   const base = { method: 'get' };
-
-  // @ts-expect-error
-  ObjectBuilder.fromBase<TestType>(base).with('response', '{}').build();
+  ObjectBuilder.fromBase<TestType>(base).build();
 }
