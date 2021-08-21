@@ -36,18 +36,7 @@ const response: ResponseEntity = ObjectBuilder.new<ResponseEntity>()
   .with('status', 200)
   .build();
 
-<<<<<<< Updated upstream
-  public static new<Target>(): Target extends {}
-    ? keyof PickNonOptionalFields<Target> extends never
-      ? IBuild<Target>
-      : IWith<Target, {}, {}>
-    : never {
-    return new Build<Target, {}, {}>({}) as any;
-  }
-}
-=======
 type ResponseEntity = { status: number; payload: string };
->>>>>>> Stashed changes
 
 export { ObjectBuilder };
 export type { PickNonOptionalFields, PickNonOptionalFieldsKeys, Keys } from './types';
