@@ -1,6 +1,6 @@
 {
   "name": "typescript-object-builder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeSafe object generation with smart type inference.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,9 +12,9 @@
     "prebuild": "npm run clean",
     "lint": "eslint 'src/**/*.ts'",
     "type-check": "tsc --project tsconfig.json",
-    "test:watch": "jest --watch",
+    "test:watch": "tsdx test --watch",
     "pretest:coverage": "npm run clean",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "tsdx test --coverage",
     "ci": "npm-run-all type-check lint test",
     "clean": "rimraf coverage dist"
   },

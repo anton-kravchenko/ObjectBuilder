@@ -108,4 +108,38 @@ describe('test ObjectBuilder', () => {
       expect(data).toEqual({});
     });
   });
+
+  describe('test `basedOn` method', () => {
+    it('should return base object right away', () => {
+      const base = { foo: 'bar', baz: 123 };
+      const result1 = ObjectBuilder.basedOn(base).build();
+      const result2 = ObjectBuilder.basedOn<typeof result1>(base).build();
+
+      expect(base).toEqual(result1);
+      expect(base).toEqual(result2);
+    });
+
+    it('should rewrite supplied fields', () => {
+      const base = { foo: 'bar', baz: 123 };
+      const result1 = ObjectBuilder.basedOn(base).with('foo', 'changed-foo').build();
+      const result2 = ObjectBuilder.basedOn<typeof result1>(base).with('baz', 456).build();
+      const result3 = ObjectBuilder.basedOn(base)
+        .with('baz', 789)
+        .with('foo', 'changed-foo')
+        .build();
+
+      expect(result1).toEqual({ foo: 'changed-foo', baz: 123 });
+      expect(result2).toEqual({ foo: 'bar', baz: 456 });
+      expect(result3).toEqual({ foo: 'changed-foo', baz: 789 });
+    });
+
+    it('should not rewrite base object', () => {
+      const base = { foo: 'bar', baz: 123 };
+      ObjectBuilder.basedOn(base).with('foo', 'changed-foo').build();
+      ObjectBuilder.basedOn<typeof base>(base).with('baz', 456).build();
+      ObjectBuilder.basedOn(base).with('baz', 789).with('foo', 'changed-foo').build();
+
+      expect(base).toEqual({ foo: 'bar', baz: 123 });
+    });
+  });
 });

@@ -51,6 +51,12 @@ class ObjectBuilder {
     return new Build<Target, Base, {}>(base ?? {}) as any;
   }
 
+  public static basedOn<Target extends object>(
+    base: Target,
+  ): IBuild<Target> & IWith<Target, Target, {}> {
+    return new Build<Target, Target, {}>(base ?? {}) as any;
+  }
+
   public static new<Target>(): Target extends {}
     ? keyof PickNonOptionalFields<Target> extends never
       ? IBuild<Target>
