@@ -1,6 +1,6 @@
 {
   "name": "typescript-object-builder",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "TypeSafe object generation with smart type inference.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -10,7 +10,7 @@
     "test": "tsdx test",
     "prepare": "npm-run-all ci build",
     "prebuild": "npm run clean",
-    "lint": "eslint '**/*.ts'",
+    "lint": "eslint 'src/**/*.ts'",
     "type-check": "tsc --project tsconfig.json",
     "test:watch": "tsdx test --watch",
     "pretest:coverage": "npm run clean",

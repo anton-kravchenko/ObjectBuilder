@@ -43,6 +43,22 @@ const invalidEndpoint = ObjectBuilder.fromBase<Endpoint, typeof base>(base)
   .build(); /* Error - build method is not available since one of the required fields is not set */
 ```
 
+`ObjectBuilder.basedOn`
+
+```typescript
+import { ObjectBuilder } from 'typescript-object-builder';
+
+type Endpoint = { url: string; method: string; description?: string };
+
+const base = { url: '/status', method: 'GET' };
+
+const rewrittenEndpoint = ObjectBuilder.basedOn<Endpoint>(base)
+  .with('method', 'GET')
+  .with('description', 'GET /status')
+  .with('url', '/status')
+  .build(); /* Allows to take a base object and rewrite some or all of the properties */
+```
+
 ## Utility types
 
 `ObjectBuilder.PickNonOptionalFieldsKeys`
@@ -68,4 +84,4 @@ type T = PickNonOptionalFields<Endpoint>; /* T is { url: string; method: string;
 ## Features
 
 - type-safe - it doesn't allow to call build method unless all non optional fields have been set
-- smart type inference - builder offers (via autocomplete) only those fields which have not been set yet
+- smart type inference - builder offers (via autocomplete) to provide only those fields which have not been set yet
