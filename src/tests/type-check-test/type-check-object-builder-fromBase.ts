@@ -200,3 +200,19 @@ function case15() {
   // @ts-expect-error
   ObjectBuilder.fromBase<TestType>(base).build();
 }
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 16: When only one type argument is provided it is possible to overwrite all fields
+ */
+function case16() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { status: 100, response: 'bla', method: 'GET' };
+
+  const entity: TestType = ObjectBuilder.fromBase<TestType>(base)
+    .with('method', 'POST')
+    .with('response', 'resp')
+    .with('status', 201)
+    .build();
+}
