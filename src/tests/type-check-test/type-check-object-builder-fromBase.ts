@@ -175,3 +175,28 @@ function case13() {
   // @ts-expect-error
   ObjectBuilder.fromBase<TestType>(base).with('response', '{}').build();
 }
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 14: second generic type argument will default to the full type when not provided
+ */
+function case14() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { method: 'get', status: 100, response: 'bla' };
+
+  ObjectBuilder.fromBase<TestType>(base).build();
+}
+
+/**
+ * `fromBase` `type-check` test
+ *
+ * Case 15: When the second generic type argument is not provided, and the full type it not provided, then it should complain
+ */
+function case15() {
+  type TestType = { method: string; status: number; response: string };
+  const base = { status: 100, response: 'bla' };
+
+  // @ts-expect-error
+  ObjectBuilder.fromBase<TestType>(base).build();
+}
